@@ -11,13 +11,21 @@
 \usepackage{enumitem}
 \usepackage{xcolor}
 
+\definecolor{c1}{RGB}{39, 208, 242}
+\definecolor{c2}{RGB}{51, 60, 242}
+\definecolor{c3}{RGB}{52, 242, 27}
+\definecolor{c4}{RGB}{242, 114, 2}
+\definecolor{c5}{RGB}{245, 197, 0}
+
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric}
 
-\title{\acl{TI} Cheatsheet}
-\author{Benno Bielmeier }
-\date{\ac{SoSe}~2020}
+\title{Cheatsheet}
+\subtitle{\acl{TI} --- Prof.~Mauerer --- IN,IM,IT --- \acs{WiSe}20/21}
+\author{Benno Bielmeier}
+%\date{\ac{WiSe}~2020}
 
+% Repräsentation von Nicht-Terminal
 \newcommand{\nt}[1]{\langle \uppercase{#1} \rangle}
 
 \setlist{noitemsep}     % no seperation space between enumitems
@@ -49,12 +57,14 @@
 \begin{acronym}
     \acro{TI}{Theoretische Informatik}
     \acro{SoSe}{Sommersemester}
+    \acro{WiSe}{Wintersemester}
     \acro{PZ}{Pumping Zahl}
     \acro{PL}{Pumping Lemma}
     \acro{DEA}{deterministischer endlicher Automat}
     \acro{NEA}{nicht-deterministischer endlicher Automat}
 \end{acronym}
 \acused{SoSe}
+\acused{WiSe}
 
 \maketitle
 \tableofcontents
@@ -62,9 +72,9 @@
 \section{\texorpdfstring{$\epsilon$}{Epsilon}-Elimination einer Grammatik}
 Vorgehen:
 \begin{enumerate}[label=\alph*)]
-    \item Suche alle Regel mit dem Muster {\color{orange}$\langle \dots \rangle \to \epsilon$}
-    \item {\color{green}Eliminiere $\epsilon$}, durch  Einsetzten dieser Regeln für alle Vorkommnisse
-    \item {\color{blue}Isoliere $\epsilon$ mittels $\nt{S'}$}
+    \item Suche alle Regel der Form {\color{c1}$\nt{\dots} \to \epsilon$}
+    \item {\color{c2}Eliminiere $\epsilon$}, durch Einsetzten ebendieser Regeln für alle Vorkommnisse von \textcolor{c1}{$\nt{\dots}$}
+    \item {\color{c3}Isoliere $\epsilon$} mittels neuem Nicht-Terminal \textcolor{c3}{$\nt{S'}$}
 \end{enumerate}
 
 \subsection*{Beispiel}
@@ -73,21 +83,21 @@ Vorgehen:
 \begin{align}
     \label{eq:epsilon:1_search}
     \begin{split}
-    \color{orange}\nt{S} & \to a \nt{S} b \mid \nt{B} \mid \color{orange}\epsilon \\
-    \color{orange}\nt{A} & \to a \mid \nt{A}e \mid \color{orange}\epsilon \\
+    \color{c1}\nt{S} & \to a \nt{S} b \mid \nt{B} \mid \color{c1}\epsilon \\
+    \color{c1}\nt{A} & \to a \mid \nt{A}e \mid \color{c1}\epsilon \\
     \nt{B} & \to b\nt{A}c
     \end{split}
     \\ \nonumber \\
     \label{eq:epsilon:2_elemination}
     \begin{split}
-    \nt{S} & \to a \nt{S} b \mid \epsilon \mid \nt{B} \mid a{\color{green}\epsilon}b \\
-    \nt{A} & \to a \mid \nt{A}e \mid {\color{green}\epsilon}e \\
-    \nt{B} & \to b\nt{A}c \mid b{\color{green}\epsilon}c
+    \nt{S} & \to a \nt{S} b \mid \epsilon \mid \nt{B} \mid a{\color{c2}\epsilon}b \\
+    \nt{A} & \to a \mid \nt{A}e \mid {\color{c2}\epsilon}e \\
+    \nt{B} & \to b\nt{A}c \mid b{\color{c2}\epsilon}c
     \end{split}
     \\ \nonumber \\
     \label{eq:epsilon:3_isolation}
     \begin{split}
-    \color{blue}\nt{S} & \color{blue}\to \epsilon \mid \nt{S'} \\
+    \color{c3}\nt{S} & \color{c3}\to \epsilon \mid \nt{S'} \\
     \nt{S'} & \to a \nt{S} b \mid ab \\
     \nt{A} & \to a \mid e \\
     \nt{B} & \to b\nt{A}c \mid bc
@@ -101,7 +111,7 @@ Die Beweisführung für $L \in \mathcal{L}$ erfolgt über andere Verfahren\footn
 
 \subsection{Annahme / Setup}
 Annahme: $L \in \mathcal{L}_3$ \\
-$\implies \exists$ \acl{PZ} $n \in \mathbb{N}$ sodass $\forall w \in L$ mit $|w| \ge n$ zerlegbar in $xyz$ mit:
+$\implies \exists \text{ \acl{PZ} } n \in \mathbb{N}$ sodass $\forall w \in L$ mit $|w| \ge n$ zerlegbar in $xyz$, sodass
 \begin{enumerate}
     \item $|xy| \le n$
     \item $|y| \ge 1$
@@ -109,7 +119,7 @@ $\implies \exists$ \acl{PZ} $n \in \mathbb{N}$ sodass $\forall w \in L$ mit $|w|
 \end{enumerate}
 
 \subsection{Wort-Wahl}
-Wähle $w_0 \in L$ und zeige 
+Wähle ein Wort $w_0$ und zeige 
 \begin{itemize}
     \item $w_0 \in L$
     \item $|w_0| \ge n$
@@ -119,8 +129,8 @@ Wähle $w_0 \in L$ und zeige
 Anwenden der drei Regeln auf $w_0$ und finden eines Widerspruchs.
 Bei Fallunterscheidung müssen \emph{alle} Optionen auf einen Widerspruch geführt werden.
 
-\subsection{Wiederspruch / Abschluss}
-Widerspruch (z.B. auf-/abgepumtes Wort $w' \notin L$)
+\subsection{Widerspruch / Abschluss}
+Widerspruch (z.B.\ auf-/abgepumtes Wort $w' \notin L$)
 \begin{itemize}[leftmargin=2.0cm,label=$\implies$]
     \item nicht alle Aussagen des \ac{PL} zutreffend
     \item Annahme ($L \in \mathcal{L}_3$) falsch
