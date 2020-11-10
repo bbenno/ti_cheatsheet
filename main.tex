@@ -1,0 +1,148 @@
+\documentclass[a4paper,parskip=half,footsepline=on,headings=normal,titlepage=false]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{csquotes}
+\usepackage[nolist]{acronym}
+\usepackage{microtype}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+
+\title{\acl{TI} Cheatsheet}
+\author{Benno Bielmeier }
+\date{\ac{SoSe}~2020}
+
+\newcommand{\nt}[1]{\langle \uppercase{#1} \rangle}
+
+\setlist{noitemsep}     % no seperation space between enumitems
+
+\setuptoc{toc}{leveldown}
+
+\setcounter{tocdepth}{1}
+
+%\RedeclareSectionCommand[
+  %runin=false,
+  %afterindent=false,
+  %beforeskip=\baselineskip,
+  %afterskip=.5\baselineskip]{section}
+\RedeclareSectionCommand[
+  %runin=false,
+  %afterindent=false,
+  %beforeskip=.75\baselineskip,
+  afterskip=0.1\baselineskip]{subsection}
+
+\renewcommand{\epsilon}{\varepsilon}
+
+% each section on its own page
+\addtokomafont{section}{\clearpage}
+
+\begin{document}
+
+%\numberwithin{equation}{section}
+
+\begin{acronym}
+    \acro{TI}{Theoretische Informatik}
+    \acro{SoSe}{Sommersemester}
+    \acro{PZ}{Pumping Zahl}
+    \acro{PL}{Pumping Lemma}
+    \acro{DEA}{deterministischer endlicher Automat}
+    \acro{NEA}{nicht-deterministischer endlicher Automat}
+\end{acronym}
+\acused{SoSe}
+
+\maketitle
+\tableofcontents
+
+\section{\texorpdfstring{$\epsilon$}{Epsilon}-Elimination einer Grammatik}
+Vorgehen:
+\begin{enumerate}[label=\alph*)]
+    \item Suche alle Regel mit dem Muster {\color{orange}$\langle \dots \rangle \to \epsilon$}
+    \item {\color{green}Eliminiere $\epsilon$}, durch  Einsetzten dieser Regeln für alle Vorkommnisse
+    \item {\color{blue}Isoliere $\epsilon$ mittels $\nt{S'}$}
+\end{enumerate}
+
+\subsection*{Beispiel}
+
+\begin{subequations}
+\begin{align}
+    \label{eq:epsilon:1_search}
+    \begin{split}
+    \color{orange}\nt{S} & \to a \nt{S} b \mid \nt{B} \mid \color{orange}\epsilon \\
+    \color{orange}\nt{A} & \to a \mid \nt{A}e \mid \color{orange}\epsilon \\
+    \nt{B} & \to b\nt{A}c
+    \end{split}
+    \\ \nonumber \\
+    \label{eq:epsilon:2_elemination}
+    \begin{split}
+    \nt{S} & \to a \nt{S} b \mid \epsilon \mid \nt{B} \mid a{\color{green}\epsilon}b \\
+    \nt{A} & \to a \mid \nt{A}e \mid {\color{green}\epsilon}e \\
+    \nt{B} & \to b\nt{A}c \mid b{\color{green}\epsilon}c
+    \end{split}
+    \\ \nonumber \\
+    \label{eq:epsilon:3_isolation}
+    \begin{split}
+    \color{blue}\nt{S} & \color{blue}\to \epsilon \mid \nt{S'} \\
+    \nt{S'} & \to a \nt{S} b \mid ab \\
+    \nt{A} & \to a \mid e \\
+    \nt{B} & \to b\nt{A}c \mid bc
+    \end{split}
+\end{align}
+\end{subequations}
+
+\section{Beweis mittels \acl{PL}}
+Mit dem \ac{PL} kann lediglich bewiesen werden, dass eine Sprache $L$ nicht regulär ist.
+Die Beweisführung für $L \in \mathcal{L}$ erfolgt über andere Verfahren\footnote{Satz von \emph{Myhill und Nerode}, \emph{\acs{DEA}}- bzw.\ \emph{\acs{NEA}}-Konstruktion, Abbildung über \emph{reguläre Grammatik}, Finden eines \emph{regulären Ausdrucks}, \emph{Abschlusseigenschaften} von regulären Sprachen}.
+
+\subsection{Annahme / Setup}
+Annahme: $L \in \mathcal{L}_3$ \\
+$\implies \exists$ \acl{PZ} $n \in \mathbb{N}$ sodass $\forall w \in L$ mit $|w| \ge n$ zerlegbar in $xyz$ mit:
+\begin{enumerate}
+    \item $|xy| \le n$
+    \item $|y| \ge 1$
+    \item $\forall i \in \mathbb{N}_0 : xy^iz \in L$
+\end{enumerate}
+
+\subsection{Wort-Wahl}
+Wähle $w_0 \in L$ und zeige 
+\begin{itemize}
+    \item $w_0 \in L$
+    \item $|w_0| \ge n$
+\end{itemize}
+
+\subsection{Regelanwendung}
+Anwenden der drei Regeln auf $w_0$ und finden eines Widerspruchs.
+Bei Fallunterscheidung müssen \emph{alle} Optionen auf einen Widerspruch geführt werden.
+
+\subsection{Wiederspruch / Abschluss}
+Widerspruch (z.B. auf-/abgepumtes Wort $w' \notin L$)
+\begin{itemize}[leftmargin=2.0cm,label=$\implies$]
+    \item nicht alle Aussagen des \ac{PL} zutreffend
+    \item Annahme ($L \in \mathcal{L}_3$) falsch
+    \item $L \notin \mathcal{L}_3$
+\end{itemize}
+
+\section{Table-Filling-Algorithmus}
+$\rightarrow$ Minimal-Automat ($|R_L| = |R_M|$) für Reguläre Sprachen
+
+\begin{enumerate}
+    \item Erstelle Tabelle
+    \item Markiere alle Paare $(q, q')$ mit $q\in F \wedge q\notin F$
+    \item Teste $\forall$ unmarkierte Paare $(q, q')$ und $\forall \sigma \in \Sigma$
+    \[
+     (\delta(q,\sigma_i), \delta(q',\sigma_i))
+      \begin{cases} 
+       \text{bereits markiert } & \implies \text{markiere } (q, q') \\
+       \text{nicht markiert } & \implies \text{do nothing}
+      \end{cases}
+    \]
+    \item Wiederhole Schritt 3 bis Tabelle invariant
+    \item Verschmelze alle nicht markierten Paare
+\end{enumerate}
+
+\end{document}
