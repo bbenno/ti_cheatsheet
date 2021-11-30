@@ -73,7 +73,7 @@
 Vorgehen:
 \begin{enumerate}[label=\alph*)]
     \item Suche alle Regel der Form {\color{c1}$\nt{\dots} \to \epsilon$}
-    \item {\color{c2}Eliminiere $\epsilon$}, durch Einsetzen ebendieser Regeln für alle Vorkommnisse von \textcolor{c1}{$\nt{\dots}$}
+    \item {\color{c2}Eliminiere $\epsilon$}, durch kombinatorisches Einsetzen ebendieser Regeln für alle Vorkommnisse von \textcolor{c1}{$\nt{\dots}$}
     \item {\color{c3}Isoliere $\epsilon$} mittels neuem Nicht-Terminal \textcolor{c3}{$\nt{S'}$}
 \end{enumerate}
 
@@ -83,24 +83,33 @@ Vorgehen:
 \begin{align}
     \label{eq:epsilon:1_search}
     \begin{split}
+    % S -> aSb | B | \e
+    % A -> a | Ae | \e
+    % B -> bAcAb
     \color{c1}\nt{S} & \to a \nt{S} b \mid \nt{B} \mid \color{c1}\epsilon \\
     \color{c1}\nt{A} & \to a \mid \nt{A}e \mid \color{c1}\epsilon \\
-    \nt{B} & \to b\nt{A}c
+    \nt{B} & \to b\nt{A}c\nt{A}b
     \end{split}
     \\ \nonumber \\
     \label{eq:epsilon:2_elemination}
     \begin{split}
+    % S -> aSb | B | \e
+    % A -> a | Ae | \e
+    % B -> bAcAb | b\ecAb | bAc\eb | b\ec\eb
     \nt{S} & \to a \nt{S} b \mid \epsilon \mid \nt{B} \mid a{\color{c2}\epsilon}b \\
     \nt{A} & \to a \mid \nt{A}e \mid {\color{c2}\epsilon}e \\
-    \nt{B} & \to b\nt{A}c \mid b{\color{c2}\epsilon}c
+    \nt{B} & \to b\nt{A}c\nt{A}b \mid b{\color{c2}\epsilon}c\nt{A}b \mid b\nt{A}c{\color{c2}\epsilon}b \mid b{\color{c2}\epsilon}c{\color{c2}\epsilon}b
     \end{split}
     \\ \nonumber \\
     \label{eq:epsilon:3_isolation}
     \begin{split}
+    % S -> aSb | B | \e
+    % A -> a | Ae | \e
+    % B -> bAcAb | bcAb | bAcb | bcb
     \color{c3}\nt{S} & \color{c3}\to \epsilon \mid \nt{S'} \\
     \nt{S'} & \to a \nt{S} b \mid ab \\
     \nt{A} & \to a \mid e \\
-    \nt{B} & \to b\nt{A}c \mid bc
+    \nt{B} & \to b\nt{A}c\nt{A}b \mid bc\nt{A}b \mid b\nt{A}cb \mid bcb
     \end{split}
 \end{align}
 \end{subequations}
