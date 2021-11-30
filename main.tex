@@ -28,7 +28,7 @@
 % Repräsentation von Nicht-Terminal
 \newcommand{\nt}[1]{\langle \uppercase{#1} \rangle}
 
-\setlist{noitemsep}     % no seperation space between enumitems
+\setlist{noitemsep}     % no separation space between enum items
 
 \setuptoc{toc}{leveldown}
 
@@ -73,7 +73,7 @@
 Vorgehen:
 \begin{enumerate}[label=\alph*)]
     \item Suche alle Regel der Form {\color{c1}$\nt{\dots} \to \epsilon$}
-    \item {\color{c2}Eliminiere $\epsilon$}, durch Einsetzten ebendieser Regeln für alle Vorkommnisse von \textcolor{c1}{$\nt{\dots}$}
+    \item {\color{c2}Eliminiere $\epsilon$}, durch Einsetzen ebendieser Regeln für alle Vorkommnisse von \textcolor{c1}{$\nt{\dots}$}
     \item {\color{c3}Isoliere $\epsilon$} mittels neuem Nicht-Terminal \textcolor{c3}{$\nt{S'}$}
 \end{enumerate}
 
