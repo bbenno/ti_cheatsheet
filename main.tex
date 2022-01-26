@@ -150,12 +150,12 @@ Widerspruch (z.B.\ auf-/abgepumtes Wort $w' \notin L$)
 $\rightarrow$ Minimal-Automat ($|R_L| = |R_M|$) für Reguläre Sprachen
 
 \begin{enumerate}
-	\item Erstelle Tabelle
-	\item Markiere alle Paare $(q, q')$ mit $q\in F \wedge q\notin F$
-	\item Teste $\forall$ unmarkierte Paare $(q, q')$ und $\forall \sigma \in \Sigma$
+	\item Erstelle Tabelle $\forall$ Zustandspaare $(q, q')$ mit $q, q' \in Q$ für $q \ne q'$
+	\item Markiere alle Paare $(q, q')$ mit $q\in F \land q'\notin F$ (oder umgekehrt)
+	\item Teste alle unmarkierten Paare $(q, q')$ und $\forall \sigma \in \Sigma$
 		\[
 			(\delta(q,\sigma_i), \delta(q',\sigma_i))
-			\begin{cases} 
+			\begin{cases}
 				\text{bereits markiert } & \implies \text{markiere } (q, q') \\
 				\text{nicht markiert } & \implies \text{do nothing}
 			\end{cases}
