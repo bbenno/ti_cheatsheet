@@ -25,13 +25,7 @@
         in {
           default = devenv.lib.mkShell {
             inherit inputs pkgs;
-            modules = [{
-              packages = with pkgs; [ gnumake ];
-              languages.texlive = {
-                enable = true;
-                packages = [ "scheme-full" "latexmk" ];
-              };
-            }];
+            modules = [ ./devenv.nix ];
           };
         });
     };
