@@ -1,54 +1,51 @@
-\documentclass[a4paper,parskip=half,footsepline=on,headings=normal,titlepage=false]{scrartcl}
+\documentclass[a4paper,parskip=half,footsepline,headings=normal,titlepage=false]{scrartcl}
+% Encoding and language
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
-\usepackage{hyperref}
+
+% Typography enhancements
+\usepackage{microtype}
 \usepackage{csquotes}
 \usepackage[nolist]{acronym}
-\usepackage{microtype}
-\usepackage{mathtools}
-\usepackage{amssymb}
+\usepackage{mathtools, amssymb}
 \usepackage{enumitem}
-\usepackage{xcolor}
+%\setlist{noitemsep} % Reduce space between items
+\setlist{nosep}
 
+% Custom Colors
+\usepackage{xcolor}
 \definecolor{c1}{RGB}{39, 208, 242}
 \definecolor{c2}{RGB}{51, 60, 242}
 \definecolor{c3}{RGB}{52, 242, 27}
 \definecolor{c4}{RGB}{242, 114, 2}
 \definecolor{c5}{RGB}{245, 197, 0}
 
+% Graphics and diagrams
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric}
+
+\usepackage{hyperref}
+\hypersetup{
+	pdftitle={TI Cheatsheet},
+	pdfauthor={Benno Bielmeier},
+	pdfsubject={Theoretische Informatik --- Prof. Mauerer --- IN,IM,IT --- WiSe 21/22},
+	pdfkeywords={Theoretische Informatik, Automaten, Pumping Lemma, Minimalautomat}
+}
 
 \title{Cheatsheet}
 \subtitle{\acl{TI} --- Prof.~Mauerer --- IN,IM,IT --- \acs{WiSe}21/22}
 \author{Benno Bielmeier}
 %\date{\ac{WiSe}~2020}
 
-% Repräsentation von Nicht-Terminal
-\newcommand{\nt}[1]{\langle \uppercase{#1} \rangle}
-
-\setlist{noitemsep}     % no separation space between enum items
+% Custom commands and adjustments
+\newcommand{\nt}[1]{\textlangle\uppercase{#1}\textrangle}
+\renewcommand{\epsilon}{\varepsilon}
+\addtokomafont{section}{\clearpage} % New page for each section
+\RedeclareSectionCommand[afterskip=0.1\baselineskip]{subsection}
 
 \setuptoc{toc}{leveldown}
-
 \setcounter{tocdepth}{1}
-
-%\RedeclareSectionCommand[
-%	runin=false,
-%	afterindent=false,
-%	beforeskip=\baselineskip,
-%	afterskip=.5\baselineskip]{section}
-\RedeclareSectionCommand[
-	%runin=false,
-	%afterindent=false,
-	%beforeskip=.75\baselineskip,
-	afterskip=0.1\baselineskip]{subsection}
-
-\renewcommand{\epsilon}{\varepsilon}
-
-% each section on its own page
-\addtokomafont{section}{\clearpage}
 
 \begin{document}
 
@@ -70,7 +67,7 @@
 \tableofcontents
 
 \section{\texorpdfstring{$\epsilon$}{Epsilon}-Elimination einer Grammatik}
-Vorgehen:
+\subsection*{Vorgehen}
 \begin{enumerate}[label=\alph*)]
 	\item Suche alle Regel der Form {\color{c1}$\nt{\dots} \to \epsilon$}
 	\item {\color{c2}Eliminiere $\epsilon$}, durch kombinatorisches Einsetzen ebendieser Regeln für alle Vorkommnisse von \textcolor{c1}{$\nt{\dots}$}
@@ -78,7 +75,6 @@ Vorgehen:
 \end{enumerate}
 
 \subsection*{Beispiel}
-
 \begin{subequations}
 	\begin{align}
 		\label{eq:epsilon:1_search}
@@ -128,7 +124,7 @@ $\implies \exists \text{ \acl{PZ} } n \in \mathbb{N}$ sodass $\forall w \in L$ m
 \end{enumerate}
 
 \subsection{Wort-Wahl}
-Wähle ein Wort $w_0$ und zeige 
+Wähle ein Wort $w_0$ und zeige
 \begin{itemize}
 	\item $w_0 \in L$
 	\item $|w_0| \ge n$
