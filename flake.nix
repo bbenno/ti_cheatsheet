@@ -27,7 +27,10 @@
             inherit inputs pkgs;
             modules = [{
               packages = with pkgs; [ gnumake ];
-              languages.texlive.enable = true;
+              languages.texlive = {
+                enable = true;
+                packages = [ "scheme-full" "latexmk" ];
+              };
             }];
           };
         });
