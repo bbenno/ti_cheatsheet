@@ -49,5 +49,12 @@
 # xcolor
 *.xcp
 
+# Devenv
+.devenv*
+devenv.local.nix
 
-.devenv
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
